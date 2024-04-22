@@ -1,12 +1,14 @@
 import { useState } from "react"
 import { categories } from "../data/categoria"
+
+import { Activity } from "../types"
 //Se importa data Categorias, haciendo alucion a que se esta llamando la data base
 
 export default function Form() {
 
   //Se crea UseState para establecer lo que se validara en el formulario, sus datos inicales
   
-  const [activity, setActivity] =useState({
+  const [activity, setActivity] =useState<Activity>({
     category:1,
     name:'',
     calories:0,
@@ -19,17 +21,29 @@ export default function Form() {
 
   const handleChange= (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
     
-    setActivity({
+    const isNumberField=["category","calories"].includes(e.target.id)
 
+    console.log(isNumberField);
+  
+
+    setActivity({
       ...activity,
-      [e.target.id]:e.target.value
+      [e.target.id]:isNumberField ? +e.target.value :e.target.value //Esta validacion esta demostrando para convertir valor a numero
     })
-  
-    
-    
-    
-  
-    
+  }
+
+  //Agregando validacion de si los campos estan llenos en el formulario para poder enviarlo
+  const isValidActivity= () => {
+    const {name,calories}=activity
+
+    return name.trim() !== "" && calories
+  }
+
+  //Validando Formulario para evitar enviar datos
+  const hadleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      console.log("submit");
+      
   }
 
   return (
@@ -37,6 +51,8 @@ export default function Form() {
     <form 
     
     className=" space-y-5 bg-white shadow p-10 rounded-lg"
+
+    onSubmit={hadleSubmit}
     > 
     
         <div className="grid grid-cols-1 gap-3">
@@ -90,8 +106,11 @@ export default function Form() {
                 </div>
         </div>
         <input type="submit"  
-        className=" bg-gray-800  hover:bg-gray-900 w-full p-2  font-bold uppercase text-white cursor-pointer"
-        value="Guardar Comida"/>
+        className=" bg-gray-800  hover:bg-gray-900 w-full p-2  font-bold uppercase text-white cursor-pointer disabled:opacity-30"
+        value={activity.category===1 ? "Guardar Comida":"Guardar Ejercicio"}
+        disabled={!isValidActivity()}
+
+        />
     
     
     </form>

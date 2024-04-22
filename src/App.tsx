@@ -13,7 +13,7 @@ function App() {
         <h1 className=" text-center text-lg font-bold  text-slate-200 uppercase">
           Contador Calorias
         </h1>
-
+      
       </div>
 
     </header>

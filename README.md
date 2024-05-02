@@ -1,4 +1,6 @@
-# React + TypeScript + Vite
+# React + TypeScript + Vite + Tailwind
+
+Aprendiendo Tailwind, el useReducer, y vista responsiva con tailwind, tambien mantener State y tambien validar Formularios desde TypeScripts
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

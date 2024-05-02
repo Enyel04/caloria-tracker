@@ -1,25 +1,33 @@
-import { useState } from "react"
+import { useState,ChangeEvent,FormEvent,Dispatch } from "react"
 import { categories } from "../data/categoria"
 
-import { Activity } from "../types"
+import type { Activity } from "../types"
+import { ActivityActions } from "../reducers/activityReducer"
 //Se importa data Categorias, haciendo alucion a que se esta llamando la data base
 
-export default function Form() {
+type FormProps={
+  dispatch:Dispatch<ActivityActions>
+}
 
-  //Se crea UseState para establecer lo que se validara en el formulario, sus datos inicales
-  
-  const [activity, setActivity] =useState<Activity>({
+
+export default function Form({dispatch}:FormProps) {
+
+ //Valores Default del Formulario
+  const InitialState= {
     category:1,
     name:'',
     calories:0,
-  })
+  }
+  //Se crea UseState para establecer lo que se validara en el formulario, sus datos inicales
+
+  const [activity, setActivity] =useState<Activity>(InitialState)
 //Se crea el handleChange para sincronizar el formulario con la base de datos
 //se agrega como metodo "e" para añadir un atributo e irlo sincronizando
 //Saber la informacion, se puede de que tipo de dato es al colocarlo dentro de una parte de los llamados
 //Es decir, donde yo este llamando dicha funcion, o arrow function
 //Se llamada el select  e input
 
-  const handleChange= (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChange= (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
     
     const isNumberField=["category","calories"].includes(e.target.id)
 
@@ -40,9 +48,12 @@ export default function Form() {
   }
 
   //Validando Formulario para evitar enviar datos
-  const hadleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+  const hadleSubmit = (e:FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      console.log("submit");
+
+     dispatch({type:"save-activity",payload: {newActivity: activity}})
+
+     setActivity(InitialState)
       
   }
 

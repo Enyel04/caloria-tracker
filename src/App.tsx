@@ -12,7 +12,7 @@ function App() {
   //Dispatch es para ejecutar las acciones
     const [state,dispatch] = useReducer(activityReducer,InitialState)
 
-    console.log(state);
+    
     
 
   return (
@@ -34,6 +34,7 @@ function App() {
               <div className=" max-w-4xl mx-auto">
                       <Form
                         dispatch={dispatch}
+                        state={state}
                       />
               </div>
             

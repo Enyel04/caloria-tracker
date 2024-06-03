@@ -1,17 +1,18 @@
-import { useState,ChangeEvent,FormEvent,Dispatch } from "react"
+import { useState,ChangeEvent,FormEvent,Dispatch, useEffect } from "react"
 import {v4 as uuidv4} from 'uuid'
 import { categories } from "../data/categoria"
 
 import type { Activity } from "../types"
-import { ActivityActions } from "../reducers/activityReducer"
+import { ActivityActions, ActivityState } from "../reducers/activityReducer"
 //Se importa data Categorias, haciendo alucion a que se esta llamando la data base
 
-type FormProps={
-  dispatch:Dispatch<ActivityActions>
+ type FormProps={
+  dispatch:Dispatch<ActivityActions>,
+  state:ActivityState
 }
 
 
-export default function Form({dispatch}:FormProps) {
+export default function Form({dispatch,state}:FormProps) {
 
  //Valores Default del Formulario
   const InitialState : Activity= {
@@ -23,12 +24,20 @@ export default function Form({dispatch}:FormProps) {
   //Se crea UseState para establecer lo que se validara en el formulario, sus datos inicales
 
   const [activity, setActivity] =useState<Activity>(InitialState)
+
+  useEffect(()=>{
+    if (state.activeId) {
+      const selectedActivity = state.activities.filter(stateActivity => stateActivity.id ===state.activeId)[0]
+      setActivity(selectedActivity)
+      
+    }
+  },[state.activeId])
+
 //Se crea el handleChange para sincronizar el formulario con la base de datos
 //se agrega como metodo "e" para añadir un atributo e irlo sincronizando
 //Saber la informacion, se puede de que tipo de dato es al colocarlo dentro de una parte de los llamados
 //Es decir, donde yo este llamando dicha funcion, o arrow function
 //Se llamada el select  e input
-
   const handleChange= (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
     
     const isNumberField=["category","calories"].includes(e.target.id)

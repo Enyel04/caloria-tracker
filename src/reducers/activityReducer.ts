@@ -45,9 +45,7 @@ export const activityReducer= (
             ...state,
             activities:updateActivities,
             active: ''
-        }
-       
-        
+        }    
     }
 
      if (action.type === 'set-activeId') {

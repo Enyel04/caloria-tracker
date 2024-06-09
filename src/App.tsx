@@ -1,4 +1,4 @@
-import { useReducer } from 'react'
+import { useReducer, useEffect } from 'react'
 import Form from './components/Form'
 import { activityReducer, InitialState } from './reducers/activityReducer'
 import ActivityList from './components/ActivityList';
@@ -11,6 +11,13 @@ function App() {
   
   //Dispatch es para ejecutar las acciones
     const [state,dispatch] = useReducer(activityReducer,InitialState)
+
+
+    //Agregando LocalStorage para almacenar pagina desde la ultima vez como estaba
+    useEffect(()=>{
+
+      localStorage.setItem('activities',JSON.stringify(state.activities))
+    }, [state.activities])
 
     
     

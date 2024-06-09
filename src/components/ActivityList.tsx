@@ -30,7 +30,7 @@ export default function ActivityList({activities, dispatch}:ActivityListProps) {
         { actividadVacio ? <p className="text-center m-5"> No hay Activiades Aún...</p> :
         
             activities.map(activity=> (
-                <div key={activity.id} className=" px-5 py-10  bg-white mt-5 flex justify-between">
+                <div key={activity.id} className=" px-5 py-10  bg-white mt-5 flex justify-between shadow">
                     <div className=" space-y-2 relative">
                         <p className={`  w-28 text-center p-2 text-white uppercase font-bold 
                         ${activity.category ===1 ? ' bg-sky-500' : 'bg-orange-500'}`}>
@@ -49,14 +49,14 @@ export default function ActivityList({activities, dispatch}:ActivityListProps) {
                             onClick={ () => dispatch({type:'set-activeId',payload:{id: activity.id}})}
                         >
                             <PencilSquareIcon
-                                className=" h-8 w-8 text-gray-800"
+                                className=" h-8 w-8 text-gray-800 hover:text-gray-700"
                             />
                         </button>
                         <button
                             onClick={ () => dispatch({type:'delete-activity',payload:{id: activity.id}})}
                         >
                             <XCircleIcon
-                                className=" h-8 w-8 text-red-800"
+                                className=" h-8 w-8 text-red-800 hover:text-red-700"
                             />
                         </button>
 

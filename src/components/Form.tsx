@@ -131,7 +131,7 @@ export default function Form({dispatch,state}:FormProps) {
                 </div>
         </div>
         <input type="submit"  
-        className=" bg-gray-800  hover:bg-gray-900 w-full p-2  font-bold uppercase text-white cursor-pointer disabled:opacity-30"
+        className=" bg-gray-800  hover:bg-gray-900 w-full p-2  font-bold uppercase text-white cursor-pointer disabled:opacity-30  disabled:cursor-auto"
         value={activity.category===1 ? "Guardar Comida":"Guardar Ejercicio"}
         disabled={!isValidActivity()}
 
